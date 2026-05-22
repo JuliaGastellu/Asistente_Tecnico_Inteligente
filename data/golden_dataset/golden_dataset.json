@@ -1,0 +1,853 @@
+[
+    {
+        "id": "RAG_1",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 1 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 1 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_2",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 2 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 2 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_3",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 3 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 3 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_4",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 4 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 4 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_5",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 5 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 5 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_6",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 6 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 6 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_7",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 7 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 7 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_8",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 8 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 8 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_9",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 9 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 9 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_10",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 10 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 10 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_11",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 11 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 11 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_12",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 12 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 12 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_13",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 13 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 13 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_14",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 14 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 14 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_15",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 15 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 15 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_16",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 16 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 16 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_17",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 17 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 17 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_18",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 18 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 18 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_19",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 19 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 19 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "RAG_20",
+        "category": "RAG",
+        "difficulty": "medium",
+        "tags": [
+            "docs"
+        ],
+        "query": "¿Qué dice la documentación sobre el tema 20 de FastAPI?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "La documentación explica el tema 20 de manera detallada.",
+        "success_criteria": "Menciona FastAPI y el tema correspondiente."
+    },
+    {
+        "id": "CALC_1",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 1 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "15",
+        "success_criteria": "El resultado debe ser 15."
+    },
+    {
+        "id": "CALC_2",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 2 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "30",
+        "success_criteria": "El resultado debe ser 30."
+    },
+    {
+        "id": "CALC_3",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 3 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "45",
+        "success_criteria": "El resultado debe ser 45."
+    },
+    {
+        "id": "CALC_4",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 4 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "60",
+        "success_criteria": "El resultado debe ser 60."
+    },
+    {
+        "id": "CALC_5",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 5 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "75",
+        "success_criteria": "El resultado debe ser 75."
+    },
+    {
+        "id": "CALC_6",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 6 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "90",
+        "success_criteria": "El resultado debe ser 90."
+    },
+    {
+        "id": "CALC_7",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 7 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "105",
+        "success_criteria": "El resultado debe ser 105."
+    },
+    {
+        "id": "CALC_8",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 8 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "120",
+        "success_criteria": "El resultado debe ser 120."
+    },
+    {
+        "id": "CALC_9",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 9 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "135",
+        "success_criteria": "El resultado debe ser 135."
+    },
+    {
+        "id": "CALC_10",
+        "category": "calculator",
+        "difficulty": "simple",
+        "tags": [
+            "math"
+        ],
+        "query": "¿Cuánto es 10 * 15?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "150",
+        "success_criteria": "El resultado debe ser 150."
+    },
+    {
+        "id": "WEATHER_1",
+        "category": "weather",
+        "difficulty": "simple",
+        "tags": [
+            "weather"
+        ],
+        "query": "¿Qué tiempo hace en Madrid?",
+        "expected_tools": [
+            "get_weather"
+        ],
+        "ground_truth": "Información del clima en Madrid.",
+        "success_criteria": "Menciona el clima de Madrid."
+    },
+    {
+        "id": "WEATHER_2",
+        "category": "weather",
+        "difficulty": "simple",
+        "tags": [
+            "weather"
+        ],
+        "query": "¿Qué tiempo hace en Barcelona?",
+        "expected_tools": [
+            "get_weather"
+        ],
+        "ground_truth": "Información del clima en Barcelona.",
+        "success_criteria": "Menciona el clima de Barcelona."
+    },
+    {
+        "id": "WEATHER_3",
+        "category": "weather",
+        "difficulty": "simple",
+        "tags": [
+            "weather"
+        ],
+        "query": "¿Qué tiempo hace en London?",
+        "expected_tools": [
+            "get_weather"
+        ],
+        "ground_truth": "Información del clima en London.",
+        "success_criteria": "Menciona el clima de London."
+    },
+    {
+        "id": "WEATHER_4",
+        "category": "weather",
+        "difficulty": "simple",
+        "tags": [
+            "weather"
+        ],
+        "query": "¿Qué tiempo hace en Paris?",
+        "expected_tools": [
+            "get_weather"
+        ],
+        "ground_truth": "Información del clima en Paris.",
+        "success_criteria": "Menciona el clima de Paris."
+    },
+    {
+        "id": "WEATHER_5",
+        "category": "weather",
+        "difficulty": "simple",
+        "tags": [
+            "weather"
+        ],
+        "query": "¿Qué tiempo hace en New York?",
+        "expected_tools": [
+            "get_weather"
+        ],
+        "ground_truth": "Información del clima en New York.",
+        "success_criteria": "Menciona el clima de New York."
+    },
+    {
+        "id": "WEATHER_6",
+        "category": "weather",
+        "difficulty": "simple",
+        "tags": [
+            "weather"
+        ],
+        "query": "¿Qué tiempo hace en Tokyo?",
+        "expected_tools": [
+            "get_weather"
+        ],
+        "ground_truth": "Información del clima en Tokyo.",
+        "success_criteria": "Menciona el clima de Tokyo."
+    },
+    {
+        "id": "WEATHER_7",
+        "category": "weather",
+        "difficulty": "simple",
+        "tags": [
+            "weather"
+        ],
+        "query": "¿Qué tiempo hace en Berlin?",
+        "expected_tools": [
+            "get_weather"
+        ],
+        "ground_truth": "Información del clima en Berlin.",
+        "success_criteria": "Menciona el clima de Berlin."
+    },
+    {
+        "id": "WEB_1",
+        "category": "search",
+        "difficulty": "medium",
+        "tags": [
+            "web"
+        ],
+        "query": "últimas noticias AI",
+        "expected_tools": [
+            "search_web"
+        ],
+        "ground_truth": "Resultados de búsqueda para últimas noticias AI.",
+        "success_criteria": "Menciona información relevante de internet."
+    },
+    {
+        "id": "WEB_2",
+        "category": "search",
+        "difficulty": "medium",
+        "tags": [
+            "web"
+        ],
+        "query": "precio Bitcoin hoy",
+        "expected_tools": [
+            "search_web"
+        ],
+        "ground_truth": "Resultados de búsqueda para precio Bitcoin hoy.",
+        "success_criteria": "Menciona información relevante de internet."
+    },
+    {
+        "id": "WEB_3",
+        "category": "search",
+        "difficulty": "medium",
+        "tags": [
+            "web"
+        ],
+        "query": "estrenos Netflix 2026",
+        "expected_tools": [
+            "search_web"
+        ],
+        "ground_truth": "Resultados de búsqueda para estrenos Netflix 2026.",
+        "success_criteria": "Menciona información relevante de internet."
+    },
+    {
+        "id": "WEB_4",
+        "category": "search",
+        "difficulty": "medium",
+        "tags": [
+            "web"
+        ],
+        "query": "ganador Oscar 2025",
+        "expected_tools": [
+            "search_web"
+        ],
+        "ground_truth": "Resultados de búsqueda para ganador Oscar 2025.",
+        "success_criteria": "Menciona información relevante de internet."
+    },
+    {
+        "id": "WEB_5",
+        "category": "search",
+        "difficulty": "medium",
+        "tags": [
+            "web"
+        ],
+        "query": "clima mundial",
+        "expected_tools": [
+            "search_web"
+        ],
+        "ground_truth": "Resultados de búsqueda para clima mundial.",
+        "success_criteria": "Menciona información relevante de internet."
+    },
+    {
+        "id": "MULTI_1",
+        "category": "multi-tool",
+        "difficulty": "complex",
+        "tags": [
+            "multi"
+        ],
+        "query": "¿Cómo se usa APIRouter en FastAPI y cuánto es 20% de 500?",
+        "expected_tools": [
+            "search_documents",
+            "calculate"
+        ],
+        "ground_truth": "Respuesta combinada usando múltiples herramientas.",
+        "success_criteria": "Usa todas las herramientas: ['search_documents', 'calculate']"
+    },
+    {
+        "id": "MULTI_2",
+        "category": "multi-tool",
+        "difficulty": "complex",
+        "tags": [
+            "multi"
+        ],
+        "query": "Busca info sobre el clima en Madrid y dime cómo hacer un test en pytest.",
+        "expected_tools": [
+            "get_weather",
+            "search_documents"
+        ],
+        "ground_truth": "Respuesta combinada usando múltiples herramientas.",
+        "success_criteria": "Usa todas las herramientas: ['get_weather', 'search_documents']"
+    },
+    {
+        "id": "MULTI_3",
+        "category": "multi-tool",
+        "difficulty": "complex",
+        "tags": [
+            "multi"
+        ],
+        "query": "¿Cuál es la diferencia entre LangChain y LlamaIndex según la web y cuánto es sqrt(144)?",
+        "expected_tools": [
+            "search_web",
+            "calculate"
+        ],
+        "ground_truth": "Respuesta combinada usando múltiples herramientas.",
+        "success_criteria": "Usa todas las herramientas: ['search_web', 'calculate']"
+    },
+    {
+        "id": "MULTI_4",
+        "category": "multi-tool",
+        "difficulty": "complex",
+        "tags": [
+            "multi"
+        ],
+        "query": "Explica Dependency Injection en FastAPI y busca el clima en Buenos Aires.",
+        "expected_tools": [
+            "search_documents",
+            "get_weather"
+        ],
+        "ground_truth": "Respuesta combinada usando múltiples herramientas.",
+        "success_criteria": "Usa todas las herramientas: ['search_documents', 'get_weather']"
+    },
+    {
+        "id": "MULTI_5",
+        "category": "multi-tool",
+        "difficulty": "complex",
+        "tags": [
+            "multi"
+        ],
+        "query": "Calcula 1500 / 3 y busca las últimas noticias de OpenAI.",
+        "expected_tools": [
+            "calculate",
+            "search_web"
+        ],
+        "ground_truth": "Respuesta combinada usando múltiples herramientas.",
+        "success_criteria": "Usa todas las herramientas: ['calculate', 'search_web']"
+    },
+    {
+        "id": "MULTI_6",
+        "category": "multi-tool",
+        "difficulty": "complex",
+        "tags": [
+            "multi"
+        ],
+        "query": "¿Cómo usar decorators en Python y qué tiempo hace en Roma?",
+        "expected_tools": [
+            "search_documents",
+            "get_weather"
+        ],
+        "ground_truth": "Respuesta combinada usando múltiples herramientas.",
+        "success_criteria": "Usa todas las herramientas: ['search_documents', 'get_weather']"
+    },
+    {
+        "id": "MULTI_7",
+        "category": "multi-tool",
+        "difficulty": "complex",
+        "tags": [
+            "multi"
+        ],
+        "query": "Dime el 10% de 1000, busca en la web sobre GPT-5 y dime cómo usar Pydantic.",
+        "expected_tools": [
+            "calculate",
+            "search_web",
+            "search_documents"
+        ],
+        "ground_truth": "Respuesta combinada usando múltiples herramientas.",
+        "success_criteria": "Usa todas las herramientas: ['calculate', 'search_web', 'search_documents']"
+    },
+    {
+        "id": "MULTI_8",
+        "category": "multi-tool",
+        "difficulty": "complex",
+        "tags": [
+            "multi"
+        ],
+        "query": "Calcula 5+5, busca el clima en CDMX y explica qué es un middleware.",
+        "expected_tools": [
+            "calculate",
+            "get_weather",
+            "search_documents"
+        ],
+        "ground_truth": "Respuesta combinada usando múltiples herramientas.",
+        "success_criteria": "Usa todas las herramientas: ['calculate', 'get_weather', 'search_documents']"
+    },
+    {
+        "id": "EDGE_1",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": " ",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Error: consulta vacía"
+    },
+    {
+        "id": "EDGE_2",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Consulta truncada"
+    },
+    {
+        "id": "EDGE_3",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "¿Cuánto es 10 / 0?",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Error: división por cero"
+    },
+    {
+        "id": "EDGE_4",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "¿Qué tiempo hace en CiudadInexistente123?",
+        "expected_tools": [
+            "get_weather"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Error: ciudad no encontrada"
+    },
+    {
+        "id": "EDGE_5",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "!!!???***",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Manejo de caracteres especiales"
+    },
+    {
+        "id": "EDGE_6",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "Dime algo sobre el tema X que no existe",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "No se encontraron resultados"
+    },
+    {
+        "id": "EDGE_7",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "¿Cómo comparar FastAPI vs Flask?",
+        "expected_tools": [
+            "search_documents"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Detección de comparativa"
+    },
+    {
+        "id": "EDGE_8",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "Calcula el 5% de nada",
+        "expected_tools": [
+            "calculate"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Error en cálculo"
+    },
+    {
+        "id": "EDGE_9",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "Busca en la web algo muy ambiguo",
+        "expected_tools": [
+            "search_web"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Resultados generales"
+    },
+    {
+        "id": "EDGE_10",
+        "category": "edge",
+        "difficulty": "hard",
+        "tags": [
+            "edge"
+        ],
+        "query": "Dime cómo usar LangChain y calcula 1+1",
+        "expected_tools": [
+            "search_documents",
+            "calculate"
+        ],
+        "ground_truth": "Manejo elegante del caso borde.",
+        "success_criteria": "Multi-tool simple"
+    }
+]
