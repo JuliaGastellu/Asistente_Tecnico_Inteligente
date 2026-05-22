@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+
+# Add project root to sys.path
+root_path = Path(__file__).resolve().parent.parent.parent
+if str(root_path) not in sys.path:
+    sys.path.append(str(root_path))
+
 import time
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware

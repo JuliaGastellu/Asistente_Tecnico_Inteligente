@@ -1,8 +1,10 @@
 import re
 import time
-from typing import Dict, List, Any, Optional
-from langchain.agents import AgentExecutor, create_openai_functions_agent
-from langchain.memory import ConversationBufferMemory
+from typing import Dict, List, Any, TypedDict, Annotated, Optional
+from langgraph.graph import StateGraph, END
+from langgraph.prebuilt import ToolNode
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from src.agent.model_selector import get_llm_for_query
 from src.agent.prompts import SYSTEM_PROMPT
@@ -15,41 +17,55 @@ from src.utils.cache import get_cache
 
 logger = setup_logger(__name__)
 
+# Define agent state
+class AgentState(TypedDict):
+    messages: Annotated[List[BaseMessage], lambda x, y: x + y]
+    tools_used: List[str]
+    sources: List[str]
+
 class TechnicalAssistant:
     def __init__(self):
         self.tools = [search_documents, calculate, get_weather, search_web]
-        self.sessions: Dict[str, ConversationBufferMemory] = {}
+        self.tool_node = ToolNode(self.tools)
+        self.sessions: Dict[str, List[BaseMessage]] = {}
         self.cache = get_cache()
         
-        self.prompt = ChatPromptTemplate.from_messages([
-            ("system", SYSTEM_PROMPT),
-            MessagesPlaceholder(variable_name="chat_history"),
-            ("human", "{input}"),
-            MessagesPlaceholder(variable_name="agent_scratchpad"),
-        ])
+    def _get_llm(self, query: str):
+        return get_llm_for_query(query).bind_tools(self.tools)
 
-    def _get_or_create_memory(self, session_id: str) -> ConversationBufferMemory:
-        if session_id not in self.sessions:
-            self.sessions[session_id] = ConversationBufferMemory(
-                memory_key="chat_history",
-                return_messages=True
-            )
-        return self.sessions[session_id]
+    def _should_continue(self, state: AgentState):
+        messages = state["messages"]
+        last_message = messages[-1]
+        if last_message.tool_calls:
+            return "tools"
+        return END
 
-    def _build_executor(self, session_id: str, query: str) -> AgentExecutor:
-        llm = get_llm_for_query(query)
-        memory = self._get_or_create_memory(session_id)
+    def _call_model(self, state: AgentState, config: Optional[Any] = None):
+        messages = state["messages"]
+        query = messages[0].content if messages else ""
+        llm = self._get_llm(query)
+        response = llm.invoke(messages, config=config)
         
-        agent = create_openai_functions_agent(llm, self.tools, self.prompt)
+        # Track tools used
+        tools_used = state.get("tools_used", [])
+        if response.tool_calls:
+            for tc in response.tool_calls:
+                if tc["name"] not in tools_used:
+                    tools_used.append(tc["name"])
         
-        return AgentExecutor(
-            agent=agent,
-            tools=self.tools,
-            memory=memory,
-            max_iterations=5,
-            handle_parsing_errors=True,
-            verbose=True
-        )
+        return {"messages": [response], "tools_used": tools_used}
+
+    def _build_app(self, query: str):
+        workflow = StateGraph(AgentState)
+        
+        workflow.add_node("agent", self._call_model)
+        workflow.add_node("tools", self.tool_node)
+        
+        workflow.set_entry_point("agent")
+        workflow.add_conditional_edges("agent", self._should_continue)
+        workflow.add_edge("tools", "agent")
+        
+        return workflow.compile()
 
     def query(self, user_input: str, session_id: str = "default") -> Dict[str, Any]:
         # Check cache
@@ -59,47 +75,38 @@ class TechnicalAssistant:
             return cached_result
 
         logger.info(f"Processing query for session {session_id}: {user_input[:50]}...")
-        executor = self._build_executor(session_id, user_input)
+        
+        if session_id not in self.sessions:
+            self.sessions[session_id] = [SystemMessage(content=SYSTEM_PROMPT)]
+            
+        history = self.sessions[session_id]
+        history.append(HumanMessage(content=user_input))
+        
+        app = self._build_app(user_input)
         
         try:
             start_time = time.time()
-            response = executor.invoke({"input": user_input})
+            state = {"messages": history, "tools_used": [], "sources": []}
+            result_state = app.invoke(state)
             latency = time.time() - start_time
             
-            answer = response["output"]
+            final_answer = result_state["messages"][-1].content
+            tools_used = result_state.get("tools_used", [])
             
-            # Extract tools used and sources
-            tools_used = []
-            # In AgentExecutor, we can look at intermediate_steps if return_intermediate_steps=True
-            # But the user didn't specify return_intermediate_steps=True.
-            # I'll enable it to extract tools_used.
+            # Extract sources from all messages (tool outputs)
+            sources = []
+            for msg in result_state["messages"]:
+                if hasattr(msg, "content"):
+                    found = re.findall(r'\[Fuente \d+: (.+?)\]', str(msg.content))
+                    sources.extend(found)
             
-            # Re-build with intermediate steps for extraction
-            # Wait, I'll just look for tool names in the answer or better, 
-            # I'll modify _build_executor to return intermediate steps.
+            sources = list(set(sources))
             
-            # Let's just extract sources with regex as requested
-            sources = re.findall(r'\[Fuente \d+: (.+?)\]', answer)
-            
-            # For tools_used, I'll check if they are mentioned in the output or 
-            # better yet, I'll use a callback or just check intermediate steps.
-            # Actually, let's use intermediate steps.
-            
-            # Modifying _build_executor to include intermediate steps if I want to extract tools_used
-            # But I can also just check which tools were called during the execution.
-            
-            # Let's refine the query method to get tools_used.
-            
-            # To get tools_used, I'll use return_intermediate_steps=True
-            executor.return_intermediate_steps = True
-            response = executor.invoke({"input": user_input})
-            
-            tools_used = list(set([step[0].tool for step in response["intermediate_steps"]]))
-            answer = response["output"]
-            sources = list(set(re.findall(r'\[Fuente \d+: (.+?)\]', str(response["intermediate_steps"]))))
+            # Update history
+            self.sessions[session_id] = result_state["messages"]
             
             result = {
-                "answer": answer,
+                "answer": final_answer,
                 "tools_used": tools_used,
                 "sources": sources,
                 "latency": latency

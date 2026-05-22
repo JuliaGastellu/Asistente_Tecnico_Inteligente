@@ -4,7 +4,6 @@ from typing import List, Tuple, Optional
 from langchain_core.tools import tool
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import Chroma
-from langchain.retrievers.document_compressors import LLMChainExtractor
 from src.config import get_settings
 from src.utils.logger import setup_logger
 
@@ -14,8 +13,11 @@ settings = get_settings()
 class OptimizedRetriever:
     def __init__(self, vectorstore: Chroma):
         self.vectorstore = vectorstore
-        self.llm_mini = ChatOpenAI(model=settings.evaluation_model, temperature=0)
-        self.compressor = LLMChainExtractor.from_llm(self.llm_mini)
+        self.llm_mini = ChatOpenAI(
+            model=settings.evaluation_model,
+            temperature=0,
+            openai_api_key=settings.openai_api_key
+        )
 
     def estimate_complexity(self, query: str) -> int:
         query_lower = query.lower()
@@ -53,14 +55,14 @@ class OptimizedRetriever:
         return [doc for score, doc in scored_docs]
 
     def compress_context(self, query: str, documents: List) -> List:
+        # Simplificación de compresión usando prompt directo para evitar dependencias obsoletas
         compressed_docs = []
         for doc in documents:
             try:
-                compressed_content = self.compressor.compress_documents([doc], query)
-                if compressed_content:
-                    compressed_docs.append(compressed_content[0])
-                else:
-                    compressed_docs.append(doc)
+                prompt = f"Extrae solo la información relevante para responder a: '{query}' del siguiente texto:\n\n{doc.page_content[:1000]}"
+                response = self.llm_mini.invoke(prompt)
+                doc.page_content = response.content
+                compressed_docs.append(doc)
             except Exception as e:
                 logger.error(f"Error compressing document: {e}")
                 compressed_docs.append(doc)
@@ -77,10 +79,19 @@ class OptimizedRetriever:
         return unique_docs
 
     def detect_comparison_query(self, query: str) -> Tuple[bool, Optional[str], Optional[str]]:
-        pattern = r"(?:diferencia|vs|comparar|comparación) (?:entre|de)?\s*(.+?)\s*(?:y|vs)\s*(.+)"
-        match = re.search(pattern, query.lower())
+        # Regex más flexible para detectar comparaciones
+        pattern_full = r"(?:diferencia|comparar|comparación) (?:entre|de)?\s*(.+?)\s*(?:y|vs)\s*(.+)"
+        pattern_vs = r"(.+?)\s+vs\s+(.+)"
+        
+        query_lower = query.lower()
+        match = re.search(pattern_full, query_lower)
         if match:
             return True, match.group(1).strip(), match.group(2).strip()
+            
+        match = re.search(pattern_vs, query_lower)
+        if match:
+            return True, match.group(1).strip(), match.group(2).strip()
+            
         return False, None, None
 
     def retrieve_with_expansion(self, query: str) -> List:

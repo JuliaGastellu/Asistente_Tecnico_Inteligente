@@ -2,8 +2,8 @@ from pydantic import BaseModel, Field
 from typing import List
 
 class QueryRequest(BaseModel):
-    query: str = Field(..., example="¿Cómo crear un endpoint en FastAPI?")
-    session_id: str = Field("default", example="user_123")
+    query: str = Field(..., json_schema_extra={"example": "¿Cómo crear un endpoint en FastAPI?"})
+    session_id: str = Field("default", json_schema_extra={"example": "user_123"})
 
     model_config = {
         "json_schema_extra": {

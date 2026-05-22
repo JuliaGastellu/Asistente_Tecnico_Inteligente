@@ -8,7 +8,10 @@ settings = get_settings()
 
 @lru_cache()
 def get_vectorstore() -> Chroma:
-    embeddings = OpenAIEmbeddings(model=settings.embedding_model)
+    embeddings = OpenAIEmbeddings(
+        model=settings.embedding_model,
+        openai_api_key=settings.openai_api_key
+    )
     return Chroma(
         persist_directory=str(settings.chroma_db_dir),
         embedding_function=embeddings

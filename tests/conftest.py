@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 from fastapi.testclient import TestClient
 from src.api.main import app
 from src.api.dependencies import get_vectorstore, get_assistant
+from langchain_core.messages import AIMessage
 
 @pytest.fixture
 def mock_vectorstore():

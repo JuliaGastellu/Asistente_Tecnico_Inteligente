@@ -1,11 +1,19 @@
-import json
+import sys
 from pathlib import Path
+
+# Add project root to sys.path
+root_path = Path(__file__).resolve().parent.parent
+if str(root_path) not in sys.path:
+    sys.path.append(str(root_path))
+
+import json
 from src.agent.agent import get_assistant
 from src.evaluation.evaluator import SystemEvaluator
-from src.config import get_settings
+from src.config import get_settings, validate_config
 from src.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
+validate_config()
 settings = get_settings()
 
 def run():

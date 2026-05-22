@@ -4,14 +4,25 @@ from typing import List, Dict, Any
 from pathlib import Path
 from datasets import Dataset
 from ragas import evaluate
-from ragas.metrics import faithfulness, answer_relevancy
+from ragas.metrics.collections import faithfulness, answer_relevancy
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from src.config import get_settings
 from src.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
+settings = get_settings()
 
 class SystemEvaluator:
     def __init__(self, agent):
         self.agent = agent
+        self.llm = ChatOpenAI(
+            model=settings.evaluation_model,
+            openai_api_key=settings.openai_api_key
+        )
+        self.embeddings = OpenAIEmbeddings(
+            model=settings.embedding_model,
+            openai_api_key=settings.openai_api_key
+        )
 
     def load_golden_dataset(self, path: Path) -> List[Dict[str, Any]]:
         with open(path, "r", encoding="utf-8") as f:
@@ -95,7 +106,12 @@ class SystemEvaluator:
         
         try:
             dataset = Dataset.from_dict(data)
-            score = evaluate(dataset, metrics=[faithfulness, answer_relevancy])
+            score = evaluate(
+                dataset,
+                metrics=[faithfulness, answer_relevancy],
+                llm=self.llm,
+                embeddings=self.embeddings
+            )
             return {
                 "faithfulness": score["faithfulness"],
                 "answer_relevancy": score["answer_relevancy"]

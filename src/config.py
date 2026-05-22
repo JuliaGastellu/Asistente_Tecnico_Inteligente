@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     openai_api_key: str = Field(..., alias="OPENAI_API_KEY")
     openweather_api_key: str = Field("", alias="OPENWEATHER_API_KEY")
     
-    default_model: str = "gpt-4"
+    default_model: str = "gpt-4o"  # Actualizado a gpt-4o por ser más eficiente
     evaluation_model: str = "gpt-4o-mini"
     embedding_model: str = "text-embedding-3-small"
     
