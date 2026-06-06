@@ -1,37 +1,66 @@
-# Python
+# ── Claude Code ───────────────────────────────────────────────────────────────
+CLAUDE.md
+.claude/
+skills/
+
+# ── Entornos virtuales ────────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+.env/
+
+# ── Variables de entorno ──────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
-*$py.class
-.venv
-venv/
-ENV/
-env/
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+
+# ── Herramientas de desarrollo ────────────────────────────────────────────────
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
+coverage.xml
 htmlcov/
-.tox/
-.nox/
-.hypothesis/
 
-# Environment variables
-.env
-
-# Logs
-logs/
-*.log
-
-# Databases
+# ── Data generada (no el corpus fuente) ───────────────────────────────────────
 data/chroma_db/
+data/golden_dataset/
+logs/
+reports/
 
-# Reports
-reports/*.json
-reports/*.md
-!reports/baseline_evaluation.md
+# ── Claves y certificados ─────────────────────────────────────────────────────
+*.pem
+*.key
 
-# IDEs
-.vscode/
-.idea/
+# ── Bases de datos locales ────────────────────────────────────────────────────
+*.db
+*.sqlite3
 
-# OS
+# ── Sistema operativo ─────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# ── IDEs ──────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Temporales ────────────────────────────────────────────────────────────────
+*.tmp
+*.bak
+*.orig

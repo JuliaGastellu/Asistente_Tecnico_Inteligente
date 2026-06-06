@@ -1,0 +1,29 @@
+services:
+  rag-api:
+    build: .
+    image: cafe-aurora-agent:1.0.0
+    container_name: cafe-aurora-agent
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      LOG_LEVEL: INFO
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/app/chroma_db_advanced
+      - ./reports:/app/reports
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+    networks:
+      - cafe-aurora-net
+
+networks:
+  cafe-aurora-net:
+    driver: bridge
+
+volumes:
+  chroma_data:
