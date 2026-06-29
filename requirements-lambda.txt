@@ -1,10 +1,15 @@
-# Versiones pinneadas (==) al entorno real instalado (pip freeze).
-# Reproducibilidad garantizada: este es el set efectivamente probado.
-# Para regenerar: pip freeze > requirements_frozen.txt y actualizar estos pins.
+# Dependencias de PRODUCCIÓN para el paquete Lambda — versiones pinneadas (==)
+# al entorno real instalado (mismas versiones que requirements.txt).
+#
+# Excluye respecto a requirements.txt:
+#   - ragas, datasets          → solo para evaluación local
+#   - pytest, pytest-asyncio, pytest-cov → solo para tests locales
+# Paquetes pesados transitivos (onnxruntime, huggingface_hub, tokenizers, pyarrow,
+# grpcio, etc.) se excluyen en build time dentro de scripts/deploy_localstack.py.
 
 # ── API ───────────────────────────────────────────────────────────────────────
 fastapi==0.136.1
-uvicorn[standard]==0.47.0
+uvicorn==0.47.0
 mangum==0.21.0
 
 # ── AWS / Cloud ───────────────────────────────────────────────────────────────
@@ -26,16 +31,12 @@ langchain-text-splitters==1.1.2
 chromadb==1.5.9
 pinecone==9.1.0
 
-# ── Evaluación (solo local; ver requirements-lambda.txt para producción) ──────
-ragas==0.4.3
-datasets==4.8.5
-
-# ── Tests ─────────────────────────────────────────────────────────────────────
-pytest==9.0.3
-pytest-asyncio==1.3.0
-pytest-cov==7.1.0
-
 # ── Herramientas del agente ───────────────────────────────────────────────────
 requests==2.34.2
 duckduckgo-search==8.1.1
 tiktoken==0.13.0
+
+# ── Pins de deps transitivas (resolución de conflictos), al set real instalado ─
+instructor==1.15.1
+rich==14.3.4
+fsspec==2026.2.0

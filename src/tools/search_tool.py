@@ -1,5 +1,10 @@
 from langchain_core.tools import tool
-from duckduckgo_search import DDGS
+# El paquete `duckduckgo_search` se renombró a `ddgs`. Soportamos ambos para no
+# romper si se actualiza la dependencia (ERR-020).
+try:
+    from ddgs import DDGS
+except ImportError:
+    from duckduckgo_search import DDGS
 from src.utils.logger import setup_logger
 
 logger = setup_logger(__name__)

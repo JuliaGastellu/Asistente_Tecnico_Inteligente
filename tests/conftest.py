@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import MagicMock
 from fastapi.testclient import TestClient
 from src.api.main import app
-from src.api.dependencies import get_vectorstore, get_assistant
+from src.api.dependencies import get_vectorstore, get_vectorstore_or_none, get_assistant
 from langchain_core.messages import AIMessage
 
 @pytest.fixture
@@ -36,6 +36,7 @@ def mock_assistant():
 @pytest.fixture
 def client(mock_vectorstore, mock_assistant):
     app.dependency_overrides[get_vectorstore] = lambda: mock_vectorstore
+    app.dependency_overrides[get_vectorstore_or_none] = lambda: mock_vectorstore
     app.dependency_overrides[get_assistant] = lambda: mock_assistant
     with TestClient(app) as c:
         yield c

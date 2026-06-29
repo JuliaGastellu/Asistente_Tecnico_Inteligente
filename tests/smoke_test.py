@@ -7,6 +7,25 @@ def test_health_check(client):
     assert data["status"] == "healthy"
     assert "components" in data
 
+def test_health_degraded_when_vectorstore_down(mock_assistant):
+    """Si el vectorstore no está disponible, /health responde 200 'degraded', no 500."""
+    from src.api.main import app
+    from src.api.dependencies import get_assistant, get_vectorstore_or_none
+    from fastapi.testclient import TestClient
+
+    app.dependency_overrides[get_assistant] = lambda: mock_assistant
+    app.dependency_overrides[get_vectorstore_or_none] = lambda: None  # construcción falló
+    try:
+        with TestClient(app) as c:
+            response = c.get("/health")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "degraded"
+        assert data["components"]["chromadb"] == "error"
+    finally:
+        app.dependency_overrides.clear()
+
+
 def test_query_endpoint(client):
     payload = {"query": "¿Qué es FastAPI?", "session_id": "test_session"}
     response = client.post("/query", json=payload)

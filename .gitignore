@@ -37,9 +37,14 @@ htmlcov/
 
 # ── Data generada (no el corpus fuente) ───────────────────────────────────────
 data/chroma_db/
-data/golden_dataset/
 logs/
 reports/
+# NOTA: data/golden_dataset/ NO se ignora — es fuente de verdad de la evaluación.
+
+# ── Artefactos de build / deploy Lambda ───────────────────────────────────────
+function.zip
+*.zip
+lambda_package/
 
 # ── Claves y certificados ─────────────────────────────────────────────────────
 *.pem

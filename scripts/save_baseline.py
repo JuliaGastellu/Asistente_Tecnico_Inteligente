@@ -21,16 +21,17 @@ def save_baseline():
     evaluator = SystemEvaluator(assistant)
     
     report = evaluator.run_full_evaluation(settings.golden_dataset_path)
-    
+
     baseline_path = settings.reports_dir / "baseline_metrics.json"
-    
+
+    # Reutiliza failed_case_ids que ya calcula run_full_evaluation (fuente única).
     baseline_data = {
         "metrics": report["metrics"],
-        "failed_case_ids": [r["case_id"] for r in report["results"] if r.get("error") or not set(r.get("expected_tools", [])).issubset(set(r.get("tools_used", [])))]
+        "failed_case_ids": report.get("failed_case_ids", [])
     }
-    
+
     with open(baseline_path, "w", encoding="utf-8") as f:
-        json.dump(baseline_data, f, indent=4)
+        json.dump(baseline_data, f, indent=4, ensure_ascii=False)
         
     logger.info(f"Baseline metrics saved to {baseline_path}")
 

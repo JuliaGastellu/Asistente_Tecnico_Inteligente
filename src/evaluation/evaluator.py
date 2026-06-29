@@ -3,14 +3,61 @@ import time
 from typing import List, Dict, Any
 from pathlib import Path
 from datasets import Dataset
+# Compat shim: debe ejecutarse ANTES de importar ragas (ver _ragas_compat.py).
+from src.evaluation import _ragas_compat  # noqa: F401
 from ragas import evaluate
-from ragas.metrics.collections import faithfulness, answer_relevancy
+# Usamos las métricas legacy: son instancias de ragas.metrics.base.Metric, lo que la
+# función evaluate() espera. Los nombres en ragas.metrics.collections son MÓDULOS
+# (no métricas) en 0.4.3, incompatibles con esta API. La deprecación recién se hace
+# efectiva en ragas v1.0.
+from ragas.metrics import faithfulness, answer_relevancy
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from src.config import get_settings
 from src.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
 settings = get_settings()
+
+
+def _case_failed(r: Dict[str, Any]) -> bool:
+    """Un caso falla si hubo error o si no usó todas las herramientas esperadas."""
+    if r.get("error"):
+        return True
+    expected = set(r.get("expected_tools", []))
+    used = set(r.get("tools_used", []))
+    return not expected.issubset(used)
+
+
+def failed_case_ids(results: List[Dict[str, Any]]) -> List[str]:
+    """IDs de los casos fallidos (clave estable para comparación de regresiones)."""
+    return [r.get("case_id") for r in results if _case_failed(r)]
+
+
+def _mean_score(value: Any) -> float:
+    """Reduce el resultado de una métrica RAGAS a un float.
+
+    ragas 0.4.x devuelve una lista de scores por fila (y puede contener NaN o
+    np.float64). Promediamos los valores válidos; si no hay ninguno, 0.0.
+    """
+    import math
+
+    if isinstance(value, (list, tuple)):
+        valores = []
+        for v in value:
+            try:
+                f = float(v)
+            except (TypeError, ValueError):
+                continue
+            if not math.isnan(f):
+                valores.append(f)
+        return sum(valores) / len(valores) if valores else 0.0
+
+    try:
+        f = float(value)
+        return 0.0 if math.isnan(f) else f
+    except (TypeError, ValueError):
+        return 0.0
+
 
 class SystemEvaluator:
     def __init__(self, agent):
@@ -46,6 +93,7 @@ class SystemEvaluator:
                     "answer": response["answer"],
                     "tools_used": response["tools_used"],
                     "sources": response["sources"],
+                    "contexts": response.get("contexts", []),
                     "expected_tools": case["expected_tools"],
                     "ground_truth": case.get("ground_truth", ""),
                     "category": case.get("category", "general"),
@@ -93,17 +141,18 @@ class SystemEvaluator:
         if not rag_results:
             return {"faithfulness": 0.0, "answer_relevancy": 0.0}
             
+        # RAGAS necesita el TEXTO real recuperado como contexto. Usamos r["contexts"]
+        # (propagado desde el agente). Fallback a sources solo si no hay contexto, para
+        # no romper el cálculo, aunque degrada la métrica.
         data = {
             "question": [r["question"] for r in rag_results],
             "answer": [r["answer"] for r in rag_results],
-            "contexts": [[doc for doc in r["sources"]] for r in rag_results], # This might need actual content if available
+            "contexts": [
+                r.get("contexts") or r.get("sources", []) for r in rag_results
+            ],
             "ground_truth": [r["ground_truth"] for r in rag_results]
         }
-        
-        # Note: RAGAS contexts should be the actual text retrieved, not just source names.
-        # However, for simplicity and since we don't store full context in response, 
-        # I'll use placeholders or just log that it's a simplified evaluation.
-        
+
         try:
             dataset = Dataset.from_dict(data)
             score = evaluate(
@@ -112,9 +161,11 @@ class SystemEvaluator:
                 llm=self.llm,
                 embeddings=self.embeddings
             )
+            # ragas 0.4.x devuelve UNA LISTA de scores por fila (p.ej. [1.0]),
+            # no un float agregado. Promediamos a un float, ignorando NaN.
             return {
-                "faithfulness": score["faithfulness"],
-                "answer_relevancy": score["answer_relevancy"]
+                "faithfulness": _mean_score(score["faithfulness"]),
+                "answer_relevancy": _mean_score(score["answer_relevancy"]),
             }
         except Exception as e:
             logger.error(f"RAGAS evaluation failed: {e}")
@@ -129,7 +180,7 @@ class SystemEvaluator:
         ragas_scores = self.evaluate_with_ragas(results)
         
         avg_latency = sum(r.get("latency", 0) for r in results) / len(results) if results else 0
-        
+
         report = {
             "metrics": {
                 "tool_accuracy": tool_accuracy,
@@ -139,9 +190,12 @@ class SystemEvaluator:
                 "avg_latency": avg_latency
             },
             "results": results,
+            # IDs de casos fallidos: necesario para que compare_evaluations.py detecte
+            # regresiones (ERR-009). Un caso falla si hay error o si no usó las tools esperadas.
+            "failed_case_ids": failed_case_ids(results),
             "pass_fail": (
-                ragas_scores["faithfulness"] >= 0.90 and 
-                tool_accuracy >= 0.90 and 
+                ragas_scores["faithfulness"] >= 0.90 and
+                tool_accuracy >= 0.90 and
                 error_rate < 0.10
             )
         }
@@ -163,7 +217,7 @@ class SystemEvaluator:
         md += f"## Estado Final: {status}\n\n"
         
         md += "## Casos Fallidos (Top 5)\n"
-        failed_cases = [r for r in results if r.get("error") or not set(r.get("expected_tools", [])).issubset(set(r.get("tools_used", [])))]
+        failed_cases = [r for r in results if _case_failed(r)]
         
         if not failed_cases:
             md += "No se encontraron fallos.\n"

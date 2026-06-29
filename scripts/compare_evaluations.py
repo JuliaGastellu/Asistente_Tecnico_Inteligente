@@ -2,20 +2,31 @@ import sys
 import json
 from pathlib import Path
 
+def _failed_ids(data):
+    """failed_case_ids del report; si falta (reports antiguos), se deriva de results."""
+    if "failed_case_ids" in data:
+        return set(data["failed_case_ids"])
+    failed = set()
+    for r in data.get("results", []):
+        if r.get("error") or not set(r.get("expected_tools", [])).issubset(set(r.get("tools_used", []))):
+            failed.add(r.get("case_id"))
+    return failed
+
+
 def compare(path1, path2):
-    with open(path1, "r") as f:
+    with open(path1, "r", encoding="utf-8") as f:
         data1 = json.load(f)
-    with open(path2, "r") as f:
+    with open(path2, "r", encoding="utf-8") as f:
         data2 = json.load(f)
-        
+
     metrics1 = data1.get("metrics", data1)
     metrics2 = data2.get("metrics", data2)
-    
+
     print(f"{'Métrica':<20} | {'Baseline':<10} | {'Optimizado':<10} | {'Cambio':<10} | {'Veredicto'}")
     print("-" * 75)
-    
+
     improvements = 0
-    new_failures = len(set(data2.get("failed_case_ids", [])) - set(data1.get("failed_case_ids", [])))
+    new_failures = len(_failed_ids(data2) - _failed_ids(data1))
     
     for metric in metrics1:
         v1 = metrics1[metric]
